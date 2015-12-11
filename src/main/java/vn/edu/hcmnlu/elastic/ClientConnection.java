@@ -6,14 +6,15 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
+import vn.edu.hcmnlu.contants.Constants;
+
 
 public class ClientConnection {
-	private static String hostname = "localhost";
-	private static int port = 9300;
+	
 	public static Client getTransportClient(){
-		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name","elasticsearch").build();
+		Settings settings = ImmutableSettings.settingsBuilder().put(Constants.CLUSTER_KEY, Constants.CLUSTER_NAME).build();
 		TransportClient client = new TransportClient(settings);
-		client.addTransportAddress(new InetSocketTransportAddress(ClientConnection.hostname, ClientConnection.port));
+		client.addTransportAddress(new InetSocketTransportAddress(Constants.HOST_NAME, Constants.HOST_PORT));
 		return client;
 	}
 }

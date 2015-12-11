@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.edu.hcmnlu.bean.DocsMappping;
-import vn.edu.hcmnlu.contants.Contants;
+import vn.edu.hcmnlu.contants.Constants;
 import vn.edu.hcmnlu.elastic.ClientConnection;
 import vn.edu.hcmnlu.elastic.DocumentOperations;
 import vn.edu.hcmnlu.elastic.IndicesOperations;
@@ -27,12 +27,12 @@ public class UploadService {
 	public boolean uploadFile(MultipartFile file){
 		Client client = ClientConnection.getTransportClient();
 		IndicesOperations indices = new IndicesOperations(client);
-		if(!indices.checkIndexExists(Contants.INDICES)){
-			indices.createIndex(Contants.INDICES);
+		if(!indices.checkIndexExists(Constants.INDICES)){
+			indices.createIndex(Constants.INDICES);
 			try {
 				XContentBuilder mappingBuilder = jsonBuilder()
 						 .startObject()
-						 		.startObject(Contants.TYPE)
+						 		.startObject(Constants.TYPE)
 						 			.startObject("properties")
 						 				.startObject("document")
 						 					.field("type", "attachment")
@@ -49,7 +49,7 @@ public class UploadService {
 				          .endObject();
 				
 				MappingOperations mappings = new MappingOperations(client);
-				mappings.createMappingTemplate(Contants.INDICES, Contants.TYPE, mappingBuilder);
+				mappings.createMappingTemplate(Constants.INDICES, Constants.TYPE, mappingBuilder);
 			} catch (IOException e) {
 				logger.error("ERROR:" + e.getMessage());
 				return false;
@@ -66,7 +66,7 @@ public class UploadService {
 			docs.document = encoded;
 			docs.title = "Search Engineer";
 			DocumentOperations docop = new DocumentOperations(client);
-			docop.insertDocument(Contants.INDICES, Contants.TYPE, docs);
+			docop.insertDocument(Constants.INDICES, Constants.TYPE, docs);
 		} catch (IOException e) {
 			logger.error("ERROR:" + e.getMessage());
 			return false;

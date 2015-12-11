@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import vn.edu.hcmnlu.bean.DocsMappping;
-import vn.edu.hcmnlu.contants.Contants;
+import vn.edu.hcmnlu.contants.Constants;
 import vn.edu.hcmnlu.elastic.QueryCreation;
 import vn.edu.hcmnlu.upload.UploadService;
 
@@ -42,7 +42,7 @@ public class IndexController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView search(@RequestParam(value="keyword") String keyword) {
 		QueryCreation query = new QueryCreation();
-		List<DocsMappping> data = query.responseData(Contants.INDICES, Contants.TYPE, keyword);
+		List<DocsMappping> data = query.responseData(Constants.INDICES, Constants.TYPE, keyword);
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("list", data);
 		map.put("keyword", keyword);
